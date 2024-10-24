@@ -6,96 +6,26 @@
     <title>CISSP Self-Assessment</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9; /* Light background for better contrast */
-    margin: 0;
-    padding: 20px; /* Add padding to the body for better spacing */
-}
-
-h1 {
-    color: #4CAF50;
-    text-align: center; /* Center the heading */
-}
-
-label {
-    display: block;
-    margin-bottom: 5px; /* Reduce margin for better spacing */
-    font-weight: bold; /* Make labels bold for better visibility */
-}
-
-input {
-    display: block;
-    width: calc(5% - 22px); /* Full width minus padding */
-    padding: 10px; /* Add padding for comfort */
-    margin-bottom: 10px;
-    border: 1px solid #ddd; /* Light border */
-    border-radius: 4px; /* Rounded corners */
-    transition: border 0.3s; /* Transition effect for focus */
-}
-
-input:focus {
-    border-color: #4CAF50; /* Change border color on focus */
-    outline: none; /* Remove default outline */
-}
-
-ul {
-    padding-left: 20px; /* Indent list items */
-    margin: 10px 0; /* Space above and below lists */
-}
-
-li {
-    margin-bottom: 5px; /* Space between list items */
-    font-size: 14px; /* Slightly larger font for better readability */
-}
-
-.domain-section {
-    border: 1px solid #ddd;
-    padding: 15px; /* Increase padding for more space inside sections */
-    margin-bottom: 20px;
-    border-radius: 4px; /* Rounded corners for sections */
-    background-color: #fff; /* White background for sections */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-}
-
-.subtopic {
-    margin-left: 20px;
-    margin-bottom: 10px;
-    font-style: italic; /* Italicize subtopics for distinction */
-    color: #555; /* Slightly darker color for subtopics */
-}
-
-#spidergraph {
-    width: 400px;
-    height: 400px;
-    margin: 20px auto;
-    border: 1px solid #ddd; /* Add a border around the chart */
-    border-radius: 4px; /* Rounded corners for the chart */
-    background-color: #fff; /* White background for contrast */
-}
-
-button {
-    margin-top: 20px;
-    padding: 10px 20px; /* Add padding for better button size */
-    border: none; /* Remove default border */
-    border-radius: 4px; /* Rounded corners for buttons */
-    background-color: #4CAF50; /* Button background color */
-    color: white; /* Button text color */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s; /* Transition effect for hover */
-}
-
-button:hover {
-    background-color: #45a049; /* Darker green on hover */
-}
-
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
     <h1>CISSP Self-Assessment</h1>
-    <p>Rate your knowledge for each subtopic (1 = Low, 5 = Expert):</p>
+    <div class="intro-section">
+        <p>The Certified Information Systems Security Professional (CISSP) is the most globally recognized certification in
+            the information security market. CISSP validates an information security professionals deep technical and
+            managerial knowledge and experience to effectively design, engineer, and manage the overall security posture of
+            an organization.<br>
+            The broad spectrum of topics included in the CISSP Common Body of Knowledge (CBK®) ensure its relevancy across
+            all disciplines in the field of information security. 
+            </p>
+            <p>
+            This self assesment tool is designed to make it easier for you to benchmark your current skills. 
+            </p>
+            <p>Rate your knowledge for each subtopic (1 = Low, 5 = Expert):</p>
+    </div>
+
+    
 
     <!-- Domain 1: Security and Risk Management -->
     <div class="domain-section" id="domain1">
@@ -841,10 +771,10 @@ button:hover {
 
     <div>
     <button onclick="generateResults()">Generate Results</button>
-    <button onclick="savePDF()">Save PDF</button>
+    <!-- <button onclick="savePDF()">Save PDF</button> -->
     </div>
     <!-- Canvas for Spider Graph -->
-    <canvas id="spidergraph"></canvas>
+    <canvas id="spidergraph" hidden=true></canvas>
     
     <script>
         let resultsGenerated = false; // Track whether results have been generated
@@ -905,7 +835,7 @@ button:hover {
             resultsGenerated = true; // Set flag to indicate results have been generated
         }
     
-        // Function to save the generated results and chart as a PDF
+/*         // Function to save the generated results and chart as a PDF
         function savePDF() {
             // If the results have not been generated yet, generate them
             if (!resultsGenerated) {
@@ -929,7 +859,10 @@ button:hover {
             // Add Title
             doc.setFontSize(18);
             doc.text('CISSP Self-Assessment Results', 10, 10);
-    
+
+            // Save the chart as an image and add it to the PDF
+            const chartImage = window.generatedChart.canvas.toDataURL('image/png');
+            doc.addImage(chartImage, 'PNG', 10, 180, 180, 160);
             // Add Domain Scores
             doc.setFontSize(12);
             doc.text('Domain 1: Security and Risk Management', 10, 20);
@@ -949,13 +882,11 @@ button:hover {
             doc.text('Domain 8: Software Development Security', 10, 160);
             doc.text('Aggregate Score: ' + domain8Aggregate, 10, 170);
     
-            // Save the chart as an image and add it to the PDF
-            const chartImage = window.generatedChart.canvas.toDataURL('image/png');
-            doc.addImage(chartImage, 'PNG', 10, 180, 180, 160);
+
     
             // Save the PDF
             doc.save('CISSP_Self_Assessment.pdf');
-        }
+        } */
     </script>
     
 

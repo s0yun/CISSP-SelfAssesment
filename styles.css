@@ -1,0 +1,90 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9; /* Light background for better contrast */
+    margin: 0;
+    padding: 20px; /* Add padding to the body for better spacing */
+}
+
+h1 {
+    color: #4CAF50;
+    text-align: center; /* Center the heading */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px; /* Reduce margin for better spacing */
+    font-weight: bold; /* Make labels bold for better visibility */
+}
+
+input {
+    display: block;
+    width: calc(5% - 22px); /* Full width minus padding */
+    padding: 10px; /* Add padding for comfort */
+    margin-bottom: 10px;
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 4px; /* Rounded corners */
+    transition: border 0.3s; /* Transition effect for focus */
+}
+
+input:focus {
+    border-color: #4CAF50; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+}
+
+ul {
+    padding-left: 20px; /* Indent list items */
+    margin: 10px 0; /* Space above and below lists */
+}
+
+li {
+    margin-bottom: 5px; /* Space between list items */
+    font-size: 14px; /* Slightly larger font for better readability */
+}
+
+.intro-section {
+    border: 1px solid #ddd;
+    padding: 15px; /* Increase padding for more space inside sections */
+    margin-bottom: 20px;
+    border-radius: 4px; /* Rounded corners for sections */
+    background-color: #fff; /* White background for sections */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+.domain-section {
+    border: 1px solid #ddd;
+    padding: 15px; /* Increase padding for more space inside sections */
+    margin-bottom: 20px;
+    border-radius: 4px; /* Rounded corners for sections */
+    background-color: #fff; /* White background for sections */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.subtopic {
+    margin-left: 20px;
+    margin-bottom: 10px;
+    font-style: italic; /* Italicize subtopics for distinction */
+    color: #555; /* Slightly darker color for subtopics */
+}
+
+#spidergraph {
+    width: 400px;
+    height: 400px;
+    margin: 20px auto;
+    border: 1px solid #ddd; /* Add a border around the chart */
+    border-radius: 4px; /* Rounded corners for the chart */
+    background-color: #fff; /* White background for contrast */
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px; /* Add padding for better button size */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Rounded corners for buttons */
+    background-color: #4CAF50; /* Button background color */
+    color: white; /* Button text color */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Transition effect for hover */
+}
+
+button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
