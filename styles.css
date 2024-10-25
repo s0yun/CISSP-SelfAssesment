@@ -73,8 +73,8 @@ li {
 }
 
 #spidergraph {
-    width: 400px;
-    height: 400px;
+    width: 50%;
+    height: 50%;
     margin: 20px auto;
     border: 1px solid #ddd;
     border-radius: 4px;

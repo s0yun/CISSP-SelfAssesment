@@ -5,8 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CISSP Self-Assessment</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- JS library used for charting -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Script for PDF Generation -->
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -28,9 +31,9 @@
             This self assesment tool is designed to make it easier for you to benchmark your current skills.
         </p>
         <p>Rate your knowledge for each subtopic (1 = Low, 5 = Expert):
-        
+
             <button id="expand-all">Expand All</button>
-</p>
+        </p>
     </div>
     <!-- Domain 1: Security and Risk Management -->
     <details>
@@ -825,14 +828,14 @@
     <script>
         //Expand all for the Domains
 
-  const expandButton = document.getElementById("expand-all");
-  const detailsElements = document.querySelectorAll("details");
+        const expandButton = document.getElementById("expand-all");
+        const detailsElements = document.querySelectorAll("details");
 
-  expandButton.addEventListener("click", () => {
-    const allExpanded = [...detailsElements].every(details => details.open);
-    detailsElements.forEach(details => details.open = !allExpanded);
-    expandButton.textContent = allExpanded ? "Expand All" : "Collapse All";
-  });
+        expandButton.addEventListener("click", () => {
+            const allExpanded = [...detailsElements].every(details => details.open);
+            detailsElements.forEach(details => details.open = !allExpanded);
+            expandButton.textContent = allExpanded ? "Expand All" : "Collapse All";
+        });
 
 
 
@@ -881,12 +884,21 @@
             window.generatedChart = new Chart(ctx, {
                 type: 'radar',
                 data: {
-                    labels: ['Domain 1', 'Domain 2', 'Domain 3', 'Domain 4', 'Domain 5', 'Domain 6', 'Domain 7', 'Domain 8'],
+                    labels: [
+                        'Security and Risk Management',
+                        'Asset Security',
+                        'Security Architecture and Engineering',
+                        'Communication and Network Security',
+                        'Identity and Access Management (IAM)',
+                        'Security Assessment and Testing',
+                        'Security Operations',
+                        'Software Development Security'
+                    ],
                     datasets: [{
                         label: 'CISSP Self-Assessment',
                         data: [domain1Aggregate, domain2Aggregate, domain3Aggregate, domain4Aggregate, domain5Aggregate, domain6Aggregate, domain7Aggregate, domain8Aggregate],
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: '#80c883',
+                        borderColor: '#4CAF50',
                         borderWidth: 2
                     }]
                 },
