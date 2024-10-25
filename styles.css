@@ -1,0 +1,126 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #4CAF50;
+    text-align: center;
+}
+
+summary {
+    font-size: 1.5em; /* Match size for h2 */
+    font-weight: bold;
+    margin: 10px 0;
+    cursor: pointer; /* Pointer cursor for interactivity */
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input {
+    display: block;
+    width: calc(5% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: border 0.3s;
+}
+
+input:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+ul {
+    padding-left: 20px;
+    margin: 10px 0;
+}
+
+li {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.intro-section,
+.domain-section {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.intro-section p {
+    display: flex;              /* Use flexbox for paragraph layout */
+    justify-content: space-between; /* Space between text and button */
+    align-items: center;       /* Center items vertically */
+    margin: 10px 0;           /* Adjust margin as needed */
+}
+
+.subtopic {
+    margin-left: 20px;
+    margin-bottom: 10px;
+    font-style: italic;
+    color: #555;
+}
+
+#spidergraph {
+    width: 50%;
+    height: 50%;
+    margin: 20px auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+details {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    padding: 10px;
+}
+
+summary {
+    padding: 5px 0;
+    transition: color 0.3s;
+}
+
+summary:hover {
+    color: #45a049;
+}
+
+summary::marker {
+    content: '⚡ ';
+}
+
+details div {
+    padding-top: 10px;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.6;
+}
