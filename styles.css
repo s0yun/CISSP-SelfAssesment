@@ -58,6 +58,12 @@ li {
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+.intro-section p {
+    display: flex;              /* Use flexbox for paragraph layout */
+    justify-content: space-between; /* Space between text and button */
+    align-items: center;       /* Center items vertically */
+    margin: 10px 0;           /* Adjust margin as needed */
+}
 
 .subtopic {
     margin-left: 20px;

@@ -27,7 +27,10 @@
         <p>
             This self assesment tool is designed to make it easier for you to benchmark your current skills.
         </p>
-        <p>Rate your knowledge for each subtopic (1 = Low, 5 = Expert):</p>
+        <p>Rate your knowledge for each subtopic (1 = Low, 5 = Expert):
+        
+            <button id="expand-all">Expand All</button>
+</p>
     </div>
     <!-- Domain 1: Security and Risk Management -->
     <details>
@@ -820,6 +823,25 @@
     <canvas id="spidergraph" hidden=true></canvas>
 
     <script>
+        //Expand all for the Domains
+
+  const expandButton = document.getElementById("expand-all");
+  const detailsElements = document.querySelectorAll("details");
+
+  expandButton.addEventListener("click", () => {
+    const allExpanded = [...detailsElements].every(details => details.open);
+    detailsElements.forEach(details => details.open = !allExpanded);
+    expandButton.textContent = allExpanded ? "Expand All" : "Collapse All";
+  });
+
+
+
+
+
+
+
+
+
         let resultsGenerated = false; // Track whether results have been generated
 
         // Function to calculate the aggregate scores
