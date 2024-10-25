@@ -1,90 +1,120 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9; /* Light background for better contrast */
+    background-color: #f9f9f9;
     margin: 0;
-    padding: 20px; /* Add padding to the body for better spacing */
+    padding: 20px;
 }
 
 h1 {
     color: #4CAF50;
-    text-align: center; /* Center the heading */
+    text-align: center;
+}
+
+summary {
+    font-size: 1.5em; /* Match size for h2 */
+    font-weight: bold;
+    margin: 10px 0;
+    cursor: pointer; /* Pointer cursor for interactivity */
+    text-align: left;
 }
 
 label {
     display: block;
-    margin-bottom: 5px; /* Reduce margin for better spacing */
-    font-weight: bold; /* Make labels bold for better visibility */
+    margin-bottom: 5px;
+    font-weight: bold;
 }
 
 input {
     display: block;
-    width: calc(5% - 22px); /* Full width minus padding */
-    padding: 10px; /* Add padding for comfort */
+    width: calc(5% - 22px);
+    padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid #ddd; /* Light border */
-    border-radius: 4px; /* Rounded corners */
-    transition: border 0.3s; /* Transition effect for focus */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: border 0.3s;
 }
 
 input:focus {
-    border-color: #4CAF50; /* Change border color on focus */
-    outline: none; /* Remove default outline */
+    border-color: #4CAF50;
+    outline: none;
 }
 
 ul {
-    padding-left: 20px; /* Indent list items */
-    margin: 10px 0; /* Space above and below lists */
+    padding-left: 20px;
+    margin: 10px 0;
 }
 
 li {
-    margin-bottom: 5px; /* Space between list items */
-    font-size: 14px; /* Slightly larger font for better readability */
+    margin-bottom: 5px;
+    font-size: 14px;
 }
 
-.intro-section {
-    border: 1px solid #ddd;
-    padding: 15px; /* Increase padding for more space inside sections */
-    margin-bottom: 20px;
-    border-radius: 4px; /* Rounded corners for sections */
-    background-color: #fff; /* White background for sections */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-}
+.intro-section,
 .domain-section {
     border: 1px solid #ddd;
-    padding: 15px; /* Increase padding for more space inside sections */
+    padding: 15px;
     margin-bottom: 20px;
-    border-radius: 4px; /* Rounded corners for sections */
-    background-color: #fff; /* White background for sections */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .subtopic {
     margin-left: 20px;
     margin-bottom: 10px;
-    font-style: italic; /* Italicize subtopics for distinction */
-    color: #555; /* Slightly darker color for subtopics */
+    font-style: italic;
+    color: #555;
 }
 
 #spidergraph {
     width: 400px;
     height: 400px;
     margin: 20px auto;
-    border: 1px solid #ddd; /* Add a border around the chart */
-    border-radius: 4px; /* Rounded corners for the chart */
-    background-color: #fff; /* White background for contrast */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
 }
 
 button {
     margin-top: 20px;
-    padding: 10px 20px; /* Add padding for better button size */
-    border: none; /* Remove default border */
-    border-radius: 4px; /* Rounded corners for buttons */
-    background-color: #4CAF50; /* Button background color */
-    color: white; /* Button text color */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s; /* Transition effect for hover */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #45a049; /* Darker green on hover */
+    background-color: #45a049;
+}
+
+details {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    padding: 10px;
+}
+
+summary {
+    padding: 5px 0;
+    transition: color 0.3s;
+}
+
+summary:hover {
+    color: #45a049;
+}
+
+summary::marker {
+    content: '⚡ ';
+}
+
+details div {
+    padding-top: 10px;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.6;
 }
