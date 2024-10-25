@@ -820,13 +820,13 @@
 
     <div>
         <button onclick="generateResults()">Generate Results</button>
-        <!-- <button onclick="savePDF()">Save PDF</button> -->
+        <button onclick="savePDF()">Save PDF</button>
     </div>
     <!-- Canvas for Spider Graph -->
     <canvas id="spidergraph" hidden=true></canvas>
 
     <script>
-        //Expand all for the Domains
+        // Expand all for the Domains
 
         const expandButton = document.getElementById("expand-all");
         const detailsElements = document.querySelectorAll("details");
@@ -836,14 +836,8 @@
             detailsElements.forEach(details => details.open = !allExpanded);
             expandButton.textContent = allExpanded ? "Expand All" : "Collapse All";
         });
-
-
-
-
-
-
-
-
+        
+        // RESULTS GENERATION SECTION
 
         let resultsGenerated = false; // Track whether results have been generated
 
@@ -912,58 +906,60 @@
             resultsGenerated = true; // Set flag to indicate results have been generated
         }
 
-        /*         // Function to save the generated results and chart as a PDF
-                function savePDF() {
-                    // If the results have not been generated yet, generate them
-                    if (!resultsGenerated) {
-                        generateResults(); // Call generateResults first if not done
-                    }
-            
-                    // Calculate aggregate scores for each domain again
-                    const domain1Aggregate = calculateAggregate('.domain1-score', 'domain1-aggregate');
-                    const domain2Aggregate = calculateAggregate('.domain2-score', 'domain2-aggregate');
-                    const domain3Aggregate = calculateAggregate('.domain3-score', 'domain3-aggregate');
-                    const domain4Aggregate = calculateAggregate('.domain4-score', 'domain4-aggregate');
-                    const domain5Aggregate = calculateAggregate('.domain5-score', 'domain5-aggregate');
-                    const domain6Aggregate = calculateAggregate('.domain6-score', 'domain6-aggregate');
-                    const domain7Aggregate = calculateAggregate('.domain7-score', 'domain7-aggregate');
-                    const domain8Aggregate = calculateAggregate('.domain8-score', 'domain8-aggregate');
-            
-                    // Generate PDF
-                    const { jsPDF } = window.jspdf;
-                    const doc = new jsPDF();
-            
-                    // Add Title
-                    doc.setFontSize(18);
-                    doc.text('CISSP Self-Assessment Results', 10, 10);
-        
-                    // Save the chart as an image and add it to the PDF
-                    const chartImage = window.generatedChart.canvas.toDataURL('image/png');
-                    doc.addImage(chartImage, 'PNG', 10, 180, 180, 160);
-                    // Add Domain Scores
+        // Function to save the generated results and chart as a PDF
+        function savePDF() {
+            // If the results have not been generated yet, generate them
+            if (!resultsGenerated) {
+                generateResults(); // Call generateResults first if not done
+            }
+            // Delay saving the PDF until the chart is fully rendered
+            setTimeout(() => {
+                const chartImage = document.getElementById('spidergraph').toDataURL('image/png', 1.0);
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+
+                // Add Title
+                doc.setFontSize(18);
+                doc.text('CISSP Self-Assessment Results', 10, 10);
+
+                // Function to add domain scores and subdomain scores to the PDF
+                function addDomainScores(domainName, aggregateScore, inputClass, startY) {
                     doc.setFontSize(12);
-                    doc.text('Domain 1: Security and Risk Management', 10, 20);
-                    doc.text('Aggregate Score: ' + domain1Aggregate, 10, 30);
-                    doc.text('Domain 2: Asset Security', 10, 40);
-                    doc.text('Aggregate Score: ' + domain2Aggregate, 10, 50);
-                    doc.text('Domain 3: Security Architecture and Engineering', 10, 60);
-                    doc.text('Aggregate Score: ' + domain3Aggregate, 10, 70);
-                    doc.text('Domain 4: Communication and Network Security', 10, 80);
-                    doc.text('Aggregate Score: ' + domain4Aggregate, 10, 90);
-                    doc.text('Domain 5: Identity and Access Management (IAM)', 10, 100);
-                    doc.text('Aggregate Score: ' + domain5Aggregate, 10, 110);
-                    doc.text('Domain 6: Security Assessment and Testing', 10, 120);
-                    doc.text('Aggregate Score: ' + domain6Aggregate, 10, 130);
-                    doc.text('Domain 7: Security Operations', 10, 140);
-                    doc.text('Aggregate Score: ' + domain7Aggregate, 10, 150);
-                    doc.text('Domain 8: Software Development Security', 10, 160);
-                    doc.text('Aggregate Score: ' + domain8Aggregate, 10, 170);
-            
-        
-            
-                    // Save the PDF
-                    doc.save('CISSP_Self_Assessment.pdf');
-                } */
+                    doc.text(`Domain: ${domainName}`, 10, startY);
+                    doc.text(`Aggregate Score: ${aggregateScore}`, 10, startY + 10);
+                    const inputs = document.querySelectorAll(inputClass);
+                    inputs.forEach((input, index) => {
+                        const score = input.value || 0; // Get the score or default to 0
+                        const subdomainText = input.previousElementSibling.innerText; // Get the text from the preceding label
+                        doc.text(` - ${subdomainText}: ${score}`, 10, startY + 20 + (index * 10));
+                    });
+                }
+
+                // Add scores for each domain
+                let startY = 20;
+                addDomainScores('Security and Risk Management', domain1Aggregate, '.domain1-score', startY);
+                startY += 60; // Adjust Y position for next domain
+                addDomainScores('Asset Security', domain2Aggregate, '.domain2-score', startY);
+                startY += 60;
+                addDomainScores('Security Architecture and Engineering', domain3Aggregate, '.domain3-score', startY);
+                startY += 60;
+                addDomainScores('Communication and Network Security', domain4Aggregate, '.domain4-score', startY);
+                startY += 60;
+                addDomainScores('Identity and Access Management (IAM)', domain5Aggregate, '.domain5-score', startY);
+                startY += 60;
+                addDomainScores('Security Assessment and Testing', domain6Aggregate, '.domain6-score', startY);
+                startY += 60;
+                addDomainScores('Security Operations', domain7Aggregate, '.domain7-score', startY);
+                startY += 60;
+                addDomainScores('Software Development Security', domain8Aggregate, '.domain8-score', startY);
+
+                // Save the chart image to PDF
+                doc.addImage(chartImage, 'PNG', 10, startY + 20, 180, 160);
+
+                // Save the PDF
+                doc.save('CISSP_Self_Assessment.pdf');
+            }, 500); // Wait for half a second to ensure the chart is fully rendered
+        }
     </script>
 
 
