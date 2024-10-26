@@ -1416,8 +1416,8 @@
         <button onclick="generateResults()">Generate Results</button>
         <!-- <button onclick="savePDF()">Generate PDF</button> -->
     </div>
-    <!-- Canvas for Spider Graph -->
-    <canvas id="spidergraph" hidden=true></canvas>
+    <!-- Canvas for Radar Graph -->
+    <canvas id="radargraph" hidden=true></canvas>
 
     <script>
         // Expand all for the Domains
@@ -1451,8 +1451,17 @@
             return parseFloat(aggregate);
         }
 
-        // Function to generate the results and show the chart
+        // Function to generate all results graphs
         function generateResults() {
+            generatedomain1
+            generatedomain2
+            generatedomain3
+            generatedomain4
+            generatedomain5
+            generatedomain6
+            generatedomain7
+            generatedomain8
+
             // Calculate aggregate scores for each domain
             const domain1Aggregate = calculateAggregate('.domain1-score', 'domain1-aggregate');
             const domain2Aggregate = calculateAggregate('.domain2-score', 'domain2-aggregate');
@@ -1464,7 +1473,7 @@
             const domain8Aggregate = calculateAggregate('.domain8-score', 'domain8-aggregate');
 
             // Display Spider Graph
-            const ctx = document.getElementById('spidergraph').getContext('2d');
+            const ctx = document.getElementById('radargraph').getContext('2d');
             if (window.generatedChart) {
                 window.generatedChart.destroy(); // Destroy the previous chart if it exists
             }
