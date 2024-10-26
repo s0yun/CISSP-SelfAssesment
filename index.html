@@ -155,7 +155,7 @@
                 </ul>
                 <input type="number" class="domain1-score" min="1" max="5">
             </div>
-            <button onclick="generateDomainGraphs('domain1')">Generate Results</button>
+            <button onclick="generateDomainGraphs('domain1')">Get Domain Breakdown</button>
             <canvas hidden="true" id="domain1-chart"></canvas>
         </div>
     </details>
@@ -213,7 +213,7 @@
                 </ul>
                 <input type="number" class="domain2-score" min="1" max="5">
             </div>
-            <button onclick="generateDomainGraphs('domain2')">Generate Results</button>
+            <button onclick="generateDomainGraphs('domain2')">Get Domain Breakdown</button>
             <canvas hidden="true" id="domain2-chart"></canvas>
         </div>
 
@@ -337,7 +337,7 @@
                 </ul>
                 <input type="number" class="domain3-score" min="1" max="5">
             </div>
-            <button onclick="generateDomainGraphs('domain3')">Generate Results</button>
+            <button onclick="generateDomainGraphs('domain3')">Get Domain Breakdown</button>
             <canvas hidden="true" id="domain3-chart"></canvas>
         </div>
     </details>
@@ -399,7 +399,7 @@
                 </ul>
                 <input type="number" class="domain4-score" min="1" max="5">
             </div>
-            <button onclick="generateDomainGraphs('domain4')">Generate Results</button>
+            <button onclick="generateDomainGraphs('domain4')">Get Domain Breakdown</button>
             <canvas hidden="true" id="domain4-chart"></canvas>
         </div>
     </details>
@@ -473,7 +473,7 @@
                 <label>5.6 - Implement authentication systems</label>
                 <input type="number" class="domain5-score" min="1" max="5">
             </div>
-            <button onclick="generateDomainGraphs('domain5')">Generate Results</button>
+            <button onclick="generateDomainGraphs('domain5')">Get Domain Breakdown</button>
             <canvas hidden="true" id="domain5-chart"></canvas>
         </div>
     </details>
@@ -502,7 +502,7 @@
                 <label>6.5 - Conduct or facilitate security audits</label>
                 <input type="number" class="domain6-score" min="1" max="5">
             </div>
-            <button onclick="generateDomainGraphs('domain6')">Generate Results</button>
+            <button onclick="generateDomainGraphs('domain6')">Get Domain Breakdown</button>
             <canvas hidden="true" id="domain6-chart"></canvas>
         </div>
     </details>
@@ -652,7 +652,7 @@
                 </ul>
                 <input type="number" class="domain7-score" min="1" max="5">
             </div>
-            <button onclick="generateDomainGraphs('domain7')">Generate Results</button>
+            <button onclick="generateDomainGraphs('domain7')">Get Domain Breakdown</button>
             <canvas hidden="true" id="domain7-chart"></canvas>
     </details>
 
@@ -720,7 +720,7 @@
                 </ul>
                 <input type="number" class="domain8-score" min="1" max="5">
             </div>
-            <button onclick="generateDomainGraphs('domain8')">Generate Results</button>
+            <button onclick="generateDomainGraphs('domain8')">Get Domain Breakdown</button>
             <canvas hidden="true" id="domain8-chart"></canvas>
         </div>
 
@@ -758,71 +758,6 @@
         document.addEventListener("DOMContentLoaded", () => {
             setupExpandCollapseButton("expand-all", "details"); // Pass button ID and details selector
         });
-
-
-        // RESULTS GENERATION SECTION
-
-        // Function to calculate the aggregate scores
-        function calculateAggregate(domainClass, outputId) {
-            const scores = document.querySelectorAll(domainClass);
-            let total = 0, count = 0;
-            scores.forEach(input => {
-                const score = parseInt(input.value);
-                if (!isNaN(score)) {
-                    total += score;
-                    count++;
-                }
-            });
-            const aggregate = (count > 0) ? (total / count).toFixed(2) : 0;
-            // document.getElementById(outputId).innerText = aggregate;
-            return parseFloat(aggregate);
-        }
-
-        // Function to generate all results graphs
-        function generateaverages() {
-            generateAllDomainGraphs();
-            // Calculate aggregate scores for each domain
-            const domain1Aggregate = calculateAggregate('.domain1-score', 'domain1-aggregate');
-            const domain2Aggregate = calculateAggregate('.domain2-score', 'domain2-aggregate');
-            const domain3Aggregate = calculateAggregate('.domain3-score', 'domain3-aggregate');
-            const domain4Aggregate = calculateAggregate('.domain4-score', 'domain4-aggregate');
-            const domain5Aggregate = calculateAggregate('.domain5-score', 'domain5-aggregate');
-            const domain6Aggregate = calculateAggregate('.domain6-score', 'domain6-aggregate');
-            const domain7Aggregate = calculateAggregate('.domain7-score', 'domain7-aggregate');
-            const domain8Aggregate = calculateAggregate('.domain8-score', 'domain8-aggregate');
-            // Display Spider Graph
-            const ctx = document.getElementById('domain-average').getContext('2d');
-            if (window.generatedChart) {
-                window.generatedChart.destroy(); // Destroy the previous chart if it exists
-            }
-            window.generatedChart = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: [
-                        'Security and Risk Management',
-                        'Asset Security',
-                        'Security Architecture and Engineering',
-                        'Communication and Network Security',
-                        'Identity and Access Management (IAM)',
-                        'Security Assessment and Testing',
-                        'Security Operations',
-                        'Software Development Security'
-                    ],
-                    datasets: [{
-                        label: 'CISSP Self-Assessment',
-                        data: [domain1Aggregate, domain2Aggregate, domain3Aggregate, domain4Aggregate, domain5Aggregate, domain6Aggregate, domain7Aggregate, domain8Aggregate],
-                        backgroundColor: '#d9eeda',
-                        borderColor: '#4CAF50',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scale: {
-                        ticks: { beginAtZero: true, max: 5 }
-                    }
-                }
-            });
-        }
     </script>
 </body>
 
