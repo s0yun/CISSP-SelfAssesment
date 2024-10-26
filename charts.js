@@ -116,36 +116,71 @@ function generateaverages() {
     const domain6Aggregate = calculateAggregate('.domain6-score', 'domain6-aggregate');
     const domain7Aggregate = calculateAggregate('.domain7-score', 'domain7-aggregate');
     const domain8Aggregate = calculateAggregate('.domain8-score', 'domain8-aggregate');
-    // Display Spider Graph
-    const ctx = document.getElementById('domain-average').getContext('2d');
-    if (window.generatedChart) {
-        window.generatedChart.destroy(); // Destroy the previous chart if it exists
-    }
+    
+   // Display or Update the Spider Graph for Domain Averages
+const ctx = document.getElementById('domain-average').getContext('2d');
+
+// Define labels and data to ensure consistency on update
+const chartLabels = [
+    'Security and Risk Management',
+    'Asset Security',
+    'Security Architecture and Engineering',
+    'Communication and Network Security',
+    'Identity and Access Management (IAM)',
+    'Security Assessment and Testing',
+    'Security Operations',
+    'Software Development Security'
+];
+
+const chartData = [
+    domain1Aggregate,
+    domain2Aggregate,
+    domain3Aggregate,
+    domain4Aggregate,
+    domain5Aggregate,
+    domain6Aggregate,
+    domain7Aggregate,
+    domain8Aggregate
+];
+
+// Check if the chart already exists
+if (window.generatedChart) {
+    // Update all properties of the existing chart
+    window.generatedChart.data.labels = chartLabels;
+    window.generatedChart.data.datasets[0].data = chartData;
+    window.generatedChart.data.datasets[0].label = 'CISSP Self-Assessment';
+    window.generatedChart.options.scales = {
+        r: {
+            beginAtZero: true,
+            min: 1,
+            max: 5
+        }
+    };
+    window.generatedChart.update(); // Update the chart to reflect new data and labels
+} else {
+    // Create the radar chart for domain averages
     window.generatedChart = new Chart(ctx, {
         type: 'radar',
         data: {
-            labels: [
-                'Security and Risk Management',
-                'Asset Security',
-                'Security Architecture and Engineering',
-                'Communication and Network Security',
-                'Identity and Access Management (IAM)',
-                'Security Assessment and Testing',
-                'Security Operations',
-                'Software Development Security'
-            ],
+            labels: chartLabels,
             datasets: [{
                 label: 'CISSP Self-Assessment',
-                data: [domain1Aggregate, domain2Aggregate, domain3Aggregate, domain4Aggregate, domain5Aggregate, domain6Aggregate, domain7Aggregate, domain8Aggregate],
+                data: chartData,
                 backgroundColor: '#d9eeda',
                 borderColor: '#4CAF50',
                 borderWidth: 1
             }]
         },
         options: {
-            scale: {
-                ticks: { beginAtZero: true, max: 5 }
+            scales: {
+                r: {
+                    beginAtZero: true,
+                    min: 1,
+                    max: 5
+                }
             }
         }
     });
+}
+
 }
