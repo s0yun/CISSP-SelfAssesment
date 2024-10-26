@@ -166,83 +166,82 @@
                 </ul>
                 <input type="number" class="domain1-score" min="1" max="5">
             </div>
-            <button onclick="generatedomain1()">Graph it</button>
+            <button onclick="generatedomain1()">Subtopic results</button>
             <h3>Aggregate Score: <span id="domain1-aggregate"></span></h3>
-            <canvas hidden="true" ></canvas>
+            <canvas hidden="true"></canvas>
 
         </div>
 
         <!-- Calcuclate graph for Domain 1 -->
         <script>
-function generatedomain1() {
-    // Destroy any existing charts to avoid duplicates
-    if (window.radarCharts) {
-        window.radarCharts.forEach(chart => chart.destroy());
-    }
-    window.radarCharts = [];
-
-    // Set the word limit for label line breaks
-    const wordLimit = 3;
-
-    // Function to split label into multiple lines based on word limit
-    function splitLabelByWords(label, wordLimit) {
-        const words = label.split(' ');
-        let lines = [];
-        for (let i = 0; i < words.length; i += wordLimit) {
-            lines.push(words.slice(i, i + wordLimit).join(' '));
-        }
-        return lines;
-    }
-
-    // Find all domain sections
-    const domainSections = document.querySelectorAll('.domain-section');
-
-    domainSections.forEach(domain => {
-        const domainId = domain.id; // Get the ID of the current domain section
-
-        // Collect scores only within this domain section
-        const scores = Array.from(domain.querySelectorAll(`.${domainId}-score`)).map(input => {
-            return parseInt(input.value) || 0;
-        });
-
-        // Collect and process labels within this domain section
-        const labels = Array.from(domain.querySelectorAll('.subtopic label')).map(label => {
-            return splitLabelByWords(label.innerText, wordLimit); // Split label into multiple lines
-        });
-
-        // Get the canvas for this domain section
-        const canvas = domain.querySelector('canvas');
-        const ctx = canvas.getContext('2d');
-
-        // Create the radar chart for this domain
-        const radarChart = new Chart(ctx, {
-            type: 'radar',
-            data: {
-                labels: labels, // Use processed labels with line breaks
-                datasets: [{
-                    label: `Scores for ${domain.querySelector('h3').innerText}`,
-                    data: scores,
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    r: {
-                        beginAtZero: true,
-                        min: 1,
-                        max: 5
-                    }
+            function generatedomain1() {
+                // Destroy any existing charts to avoid duplicates
+                if (window.radarCharts) {
+                    window.radarCharts.forEach(chart => chart.destroy());
                 }
+                window.radarCharts = [];
+
+                // Set the word limit for label line breaks
+                const wordLimit = 3;
+
+                // Function to split label into multiple lines based on word limit
+                function splitLabelByWords(label, wordLimit) {
+                    const words = label.split(' ');
+                    let lines = [];
+                    for (let i = 0; i < words.length; i += wordLimit) {
+                        lines.push(words.slice(i, i + wordLimit).join(' '));
+                    }
+                    return lines;
+                }
+
+                // Find all domain sections
+                const domainSections = document.querySelectorAll('.domain-section');
+
+                domainSections.forEach(domain => {
+                    const domainId = domain.id; // Get the ID of the current domain section
+
+                    // Collect scores only within this domain section
+                    const scores = Array.from(domain.querySelectorAll(`.${domainId}-score`)).map(input => {
+                        return parseInt(input.value) || 0;
+                    });
+
+                    // Collect and process labels within this domain section
+                    const labels = Array.from(domain.querySelectorAll('.subtopic label')).map(label => {
+                        return splitLabelByWords(label.innerText, wordLimit); // Split label into multiple lines
+                    });
+
+                    // Get the canvas for this domain section
+                    const canvas = domain.querySelector('canvas');
+                    const ctx = canvas.getContext('2d');
+
+                    // Create the radar chart for this domain
+                    const radarChart = new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: labels, // Use processed labels with line breaks
+                            datasets: [{
+                                label: `Subtopic scores for Domain 1: Security and Risk Management`,
+                                data: scores,
+                                backgroundColor: '#d9eeda',
+                                borderColor: '#4CAF50',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                r: {
+                                    beginAtZero: true,
+                                    min: 1,
+                                    max: 5
+                                }
+                            }
+                        }
+                    });
+
+                    // Add the chart to the global array to keep track
+                    window.radarCharts.push(radarChart);
+                });
             }
-        });
-
-        // Add the chart to the global array to keep track
-        window.radarCharts.push(radarChart);
-    });
-}
-
         </script>
 
 
@@ -308,8 +307,83 @@ function generatedomain1() {
                 <input type="number" class="domain2-score" min="1" max="5">
             </div>
 
+            <button onclick="generatedomain2()">Subtopic results</button>
             <h3>Aggregate Score: <span id="domain2-aggregate"></span></h3>
+            <canvas hidden="true"></canvas>
+
         </div>
+
+        <!-- Calcuclate graph for Domain 2 -->
+        <script>
+            function generatedomain2() {
+                // Destroy any existing charts to avoid duplicates
+                if (window.radarCharts) {
+                    window.radarCharts.forEach(chart => chart.destroy());
+                }
+                window.radarCharts = [];
+
+                // Set the word limit for label line breaks
+                const wordLimit = 3;
+
+                // Function to split label into multiple lines based on word limit
+                function splitLabelByWords(label, wordLimit) {
+                    const words = label.split(' ');
+                    let lines = [];
+                    for (let i = 0; i < words.length; i += wordLimit) {
+                        lines.push(words.slice(i, i + wordLimit).join(' '));
+                    }
+                    return lines;
+                }
+
+                // Find all domain sections
+                const domainSections = document.querySelectorAll('.domain-section');
+
+                domainSections.forEach(domain => {
+                    const domainId = domain.id; // Get the ID of the current domain section
+
+                    // Collect scores only within this domain section
+                    const scores = Array.from(domain.querySelectorAll(`.${domainId}-score`)).map(input => {
+                        return parseInt(input.value) || 0;
+                    });
+
+                    // Collect and process labels within this domain section
+                    const labels = Array.from(domain.querySelectorAll('.subtopic label')).map(label => {
+                        return splitLabelByWords(label.innerText, wordLimit); // Split label into multiple lines
+                    });
+
+                    // Get the canvas for this domain section
+                    const canvas = domain.querySelector('canvas');
+                    const ctx = canvas.getContext('2d');
+
+                    // Create the radar chart for this domain
+                    const radarChart = new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: labels, // Use processed labels with line breaks
+                            datasets: [{
+                                label: `Subtopic scores for Domain 2: Asset Security`,
+                                data: scores,
+                                backgroundColor: '#d9eeda',
+                                borderColor: '#4CAF50',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                r: {
+                                    beginAtZero: true,
+                                    min: 1,
+                                    max: 5
+                                }
+                            }
+                        }
+                    });
+
+                    // Add the chart to the global array to keep track
+                    window.radarCharts.push(radarChart);
+                });
+            }
+        </script>
     </details>
 
     <!-- Domain 3: Security Architecture and Engineering -->
@@ -440,8 +514,83 @@ function generatedomain1() {
                 </ul>
                 <input type="number" class="domain3-score" min="1" max="5">
             </div>
+            <button onclick="generatedomain3()">Subtopic results</button>
             <h3>Aggregate Score: <span id="domain3-aggregate"></span></h3>
+            <canvas hidden="true"></canvas>
+
         </div>
+
+        <!-- Calcuclate graph for Domain 3 -->
+        <script>
+            function generatedomain3() {
+                // Destroy any existing charts to avoid duplicates
+                if (window.radarCharts) {
+                    window.radarCharts.forEach(chart => chart.destroy());
+                }
+                window.radarCharts = [];
+
+                // Set the word limit for label line breaks
+                const wordLimit = 3;
+
+                // Function to split label into multiple lines based on word limit
+                function splitLabelByWords(label, wordLimit) {
+                    const words = label.split(' ');
+                    let lines = [];
+                    for (let i = 0; i < words.length; i += wordLimit) {
+                        lines.push(words.slice(i, i + wordLimit).join(' '));
+                    }
+                    return lines;
+                }
+
+                // Find all domain sections
+                const domainSections = document.querySelectorAll('.domain-section');
+
+                domainSections.forEach(domain => {
+                    const domainId = domain.id; // Get the ID of the current domain section
+
+                    // Collect scores only within this domain section
+                    const scores = Array.from(domain.querySelectorAll(`.${domainId}-score`)).map(input => {
+                        return parseInt(input.value) || 0;
+                    });
+
+                    // Collect and process labels within this domain section
+                    const labels = Array.from(domain.querySelectorAll('.subtopic label')).map(label => {
+                        return splitLabelByWords(label.innerText, wordLimit); // Split label into multiple lines
+                    });
+
+                    // Get the canvas for this domain section
+                    const canvas = domain.querySelector('canvas');
+                    const ctx = canvas.getContext('2d');
+
+                    // Create the radar chart for this domain
+                    const radarChart = new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: labels, // Use processed labels with line breaks
+                            datasets: [{
+                                label: `Subtopic scores for Domain 3: Security Architecture and Engineering`,
+                                data: scores,
+                                backgroundColor: '#d9eeda',
+                                borderColor: '#4CAF50',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                r: {
+                                    beginAtZero: true,
+                                    min: 1,
+                                    max: 5
+                                }
+                            }
+                        }
+                    });
+
+                    // Add the chart to the global array to keep track
+                    window.radarCharts.push(radarChart);
+                });
+            }
+        </script>
     </details>
 
     <!-- Domain 4: Communication and Network Security -->
@@ -503,9 +652,82 @@ function generatedomain1() {
                 </ul>
                 <input type="number" class="domain4-score" min="1" max="5">
             </div>
-
+            <button onclick="generatedomain4()">Subtopic results</button>
             <h3>Aggregate Score: <span id="domain4-aggregate"></span></h3>
+            <canvas hidden="true"></canvas>
         </div>
+
+        <!-- Calcuclate graph for Domain 4 -->
+        <script>
+            function generatedomain4() {
+                // Destroy any existing charts to avoid duplicates
+                if (window.radarCharts) {
+                    window.radarCharts.forEach(chart => chart.destroy());
+                }
+                window.radarCharts = [];
+
+                // Set the word limit for label line breaks
+                const wordLimit = 3;
+
+                // Function to split label into multiple lines based on word limit
+                function splitLabelByWords(label, wordLimit) {
+                    const words = label.split(' ');
+                    let lines = [];
+                    for (let i = 0; i < words.length; i += wordLimit) {
+                        lines.push(words.slice(i, i + wordLimit).join(' '));
+                    }
+                    return lines;
+                }
+
+                // Find all domain sections
+                const domainSections = document.querySelectorAll('.domain-section');
+
+                domainSections.forEach(domain => {
+                    const domainId = domain.id; // Get the ID of the current domain section
+
+                    // Collect scores only within this domain section
+                    const scores = Array.from(domain.querySelectorAll(`.${domainId}-score`)).map(input => {
+                        return parseInt(input.value) || 0;
+                    });
+
+                    // Collect and process labels within this domain section
+                    const labels = Array.from(domain.querySelectorAll('.subtopic label')).map(label => {
+                        return splitLabelByWords(label.innerText, wordLimit); // Split label into multiple lines
+                    });
+
+                    // Get the canvas for this domain section
+                    const canvas = domain.querySelector('canvas');
+                    const ctx = canvas.getContext('2d');
+
+                    // Create the radar chart for this domain
+                    const radarChart = new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: labels, // Use processed labels with line breaks
+                            datasets: [{
+                                label: `Subtopic scores for Domain 4: Communication and Network Security`,
+                                data: scores,
+                                backgroundColor: '#d9eeda',
+                                borderColor: '#4CAF50',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                r: {
+                                    beginAtZero: true,
+                                    min: 1,
+                                    max: 5
+                                }
+                            }
+                        }
+                    });
+
+                    // Add the chart to the global array to keep track
+                    window.radarCharts.push(radarChart);
+                });
+            }
+        </script>
     </details>
 
     <!-- Domain 5: Identity and Access Management (IAM) -->
@@ -583,8 +805,82 @@ function generatedomain1() {
                 <input type="number" class="domain5-score" min="1" max="5">
             </div>
 
+            <button onclick="generatedomain5()">Subtopic results</button>
             <h3>Aggregate Score: <span id="domain5-aggregate"></span></h3>
+            <canvas hidden="true"></canvas>
         </div>
+
+        <!-- Calcuclate graph for Domain 5 -->
+        <script>
+            function generatedomain5() {
+                // Destroy any existing charts to avoid duplicates
+                if (window.radarCharts) {
+                    window.radarCharts.forEach(chart => chart.destroy());
+                }
+                window.radarCharts = [];
+
+                // Set the word limit for label line breaks
+                const wordLimit = 3;
+
+                // Function to split label into multiple lines based on word limit
+                function splitLabelByWords(label, wordLimit) {
+                    const words = label.split(' ');
+                    let lines = [];
+                    for (let i = 0; i < words.length; i += wordLimit) {
+                        lines.push(words.slice(i, i + wordLimit).join(' '));
+                    }
+                    return lines;
+                }
+
+                // Find all domain sections
+                const domainSections = document.querySelectorAll('.domain-section');
+
+                domainSections.forEach(domain => {
+                    const domainId = domain.id; // Get the ID of the current domain section
+
+                    // Collect scores only within this domain section
+                    const scores = Array.from(domain.querySelectorAll(`.${domainId}-score`)).map(input => {
+                        return parseInt(input.value) || 0;
+                    });
+
+                    // Collect and process labels within this domain section
+                    const labels = Array.from(domain.querySelectorAll('.subtopic label')).map(label => {
+                        return splitLabelByWords(label.innerText, wordLimit); // Split label into multiple lines
+                    });
+
+                    // Get the canvas for this domain section
+                    const canvas = domain.querySelector('canvas');
+                    const ctx = canvas.getContext('2d');
+
+                    // Create the radar chart for this domain
+                    const radarChart = new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: labels, // Use processed labels with line breaks
+                            datasets: [{
+                                label: `Subtopic scores for Domain 5: Identity and Access Management (IAM)`,
+                                data: scores,
+                                backgroundColor: '#d9eeda',
+                                borderColor: '#4CAF50',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                r: {
+                                    beginAtZero: true,
+                                    min: 1,
+                                    max: 5
+                                }
+                            }
+                        }
+                    });
+
+                    // Add the chart to the global array to keep track
+                    window.radarCharts.push(radarChart);
+                });
+            }
+        </script>
     </details>
 
     <!-- Domain 6: Security Assessment and Testing -->
@@ -654,8 +950,82 @@ function generatedomain1() {
                 <input type="number" class="domain6-score" min="1" max="5">
             </div>
 
+            <button onclick="generatedomain6()">Subtopic results</button>
             <h3>Aggregate Score: <span id="domain6-aggregate"></span></h3>
+            <canvas hidden="true"></canvas>
         </div>
+
+        <!-- Calcuclate graph for Domain 6 -->
+        <script>
+            function generatedomain6() {
+                // Destroy any existing charts to avoid duplicates
+                if (window.radarCharts) {
+                    window.radarCharts.forEach(chart => chart.destroy());
+                }
+                window.radarCharts = [];
+
+                // Set the word limit for label line breaks
+                const wordLimit = 3;
+
+                // Function to split label into multiple lines based on word limit
+                function splitLabelByWords(label, wordLimit) {
+                    const words = label.split(' ');
+                    let lines = [];
+                    for (let i = 0; i < words.length; i += wordLimit) {
+                        lines.push(words.slice(i, i + wordLimit).join(' '));
+                    }
+                    return lines;
+                }
+
+                // Find all domain sections
+                const domainSections = document.querySelectorAll('.domain-section');
+
+                domainSections.forEach(domain => {
+                    const domainId = domain.id; // Get the ID of the current domain section
+
+                    // Collect scores only within this domain section
+                    const scores = Array.from(domain.querySelectorAll(`.${domainId}-score`)).map(input => {
+                        return parseInt(input.value) || 0;
+                    });
+
+                    // Collect and process labels within this domain section
+                    const labels = Array.from(domain.querySelectorAll('.subtopic label')).map(label => {
+                        return splitLabelByWords(label.innerText, wordLimit); // Split label into multiple lines
+                    });
+
+                    // Get the canvas for this domain section
+                    const canvas = domain.querySelector('canvas');
+                    const ctx = canvas.getContext('2d');
+
+                    // Create the radar chart for this domain
+                    const radarChart = new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: labels, // Use processed labels with line breaks
+                            datasets: [{
+                                label: `Subtopic scores for Domain 6: Security Assessment and Testing`,
+                                data: scores,
+                                backgroundColor: '#d9eeda',
+                                borderColor: '#4CAF50',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                r: {
+                                    beginAtZero: true,
+                                    min: 1,
+                                    max: 5
+                                }
+                            }
+                        }
+                    });
+
+                    // Add the chart to the global array to keep track
+                    window.radarCharts.push(radarChart);
+                });
+            }
+        </script>
     </details>
 
     <!-- Domain 7: Security Operations -->
@@ -817,9 +1187,82 @@ function generatedomain1() {
                 </ul>
                 <input type="number" class="domain7-score" min="1" max="5">
             </div>
-
+            <button onclick="generatedomain7()">Subtopic results</button>
             <h3>Aggregate Score: <span id="domain7-aggregate"></span></h3>
+            <canvas hidden="true"></canvas>
         </div>
+
+        <!-- Calcuclate graph for Domain 7 -->
+        <script>
+            function generatedomain7() {
+                // Destroy any existing charts to avoid duplicates
+                if (window.radarCharts) {
+                    window.radarCharts.forEach(chart => chart.destroy());
+                }
+                window.radarCharts = [];
+
+                // Set the word limit for label line breaks
+                const wordLimit = 3;
+
+                // Function to split label into multiple lines based on word limit
+                function splitLabelByWords(label, wordLimit) {
+                    const words = label.split(' ');
+                    let lines = [];
+                    for (let i = 0; i < words.length; i += wordLimit) {
+                        lines.push(words.slice(i, i + wordLimit).join(' '));
+                    }
+                    return lines;
+                }
+
+                // Find all domain sections
+                const domainSections = document.querySelectorAll('.domain-section');
+
+                domainSections.forEach(domain => {
+                    const domainId = domain.id; // Get the ID of the current domain section
+
+                    // Collect scores only within this domain section
+                    const scores = Array.from(domain.querySelectorAll(`.${domainId}-score`)).map(input => {
+                        return parseInt(input.value) || 0;
+                    });
+
+                    // Collect and process labels within this domain section
+                    const labels = Array.from(domain.querySelectorAll('.subtopic label')).map(label => {
+                        return splitLabelByWords(label.innerText, wordLimit); // Split label into multiple lines
+                    });
+
+                    // Get the canvas for this domain section
+                    const canvas = domain.querySelector('canvas');
+                    const ctx = canvas.getContext('2d');
+
+                    // Create the radar chart for this domain
+                    const radarChart = new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: labels, // Use processed labels with line breaks
+                            datasets: [{
+                                label: `Subtopic scores for Domain 7: Security Operations`,
+                                data: scores,
+                                backgroundColor: '#d9eeda',
+                                borderColor: '#4CAF50',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                r: {
+                                    beginAtZero: true,
+                                    min: 1,
+                                    max: 5
+                                }
+                            }
+                        }
+                    });
+
+                    // Add the chart to the global array to keep track
+                    window.radarCharts.push(radarChart);
+                });
+            }
+        </script>
     </details>
 
     <!-- Domain 8: Software Development Security -->
@@ -891,13 +1334,87 @@ function generatedomain1() {
                 <input type="number" class="domain8-score" min="1" max="5">
             </div>
 
+            <button onclick="generatedomain8()">Subtopic results</button>
             <h3>Aggregate Score: <span id="domain8-aggregate"></span></h3>
+            <canvas hidden="true"></canvas>
         </div>
+
+        <!-- Calcuclate graph for Domain 8 -->
+        <script>
+            function generatedomain8() {
+                // Destroy any existing charts to avoid duplicates
+                if (window.radarCharts) {
+                    window.radarCharts.forEach(chart => chart.destroy());
+                }
+                window.radarCharts = [];
+
+                // Set the word limit for label line breaks
+                const wordLimit = 3;
+
+                // Function to split label into multiple lines based on word limit
+                function splitLabelByWords(label, wordLimit) {
+                    const words = label.split(' ');
+                    let lines = [];
+                    for (let i = 0; i < words.length; i += wordLimit) {
+                        lines.push(words.slice(i, i + wordLimit).join(' '));
+                    }
+                    return lines;
+                }
+
+                // Find all domain sections
+                const domainSections = document.querySelectorAll('.domain-section');
+
+                domainSections.forEach(domain => {
+                    const domainId = domain.id; // Get the ID of the current domain section
+
+                    // Collect scores only within this domain section
+                    const scores = Array.from(domain.querySelectorAll(`.${domainId}-score`)).map(input => {
+                        return parseInt(input.value) || 0;
+                    });
+
+                    // Collect and process labels within this domain section
+                    const labels = Array.from(domain.querySelectorAll('.subtopic label')).map(label => {
+                        return splitLabelByWords(label.innerText, wordLimit); // Split label into multiple lines
+                    });
+
+                    // Get the canvas for this domain section
+                    const canvas = domain.querySelector('canvas');
+                    const ctx = canvas.getContext('2d');
+
+                    // Create the radar chart for this domain
+                    const radarChart = new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: labels, // Use processed labels with line breaks
+                            datasets: [{
+                                label: `Subtopic scores for Domain 8: Software Development Security`,
+                                data: scores,
+                                backgroundColor: '#d9eeda',
+                                borderColor: '#4CAF50',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                r: {
+                                    beginAtZero: true,
+                                    min: 1,
+                                    max: 5
+                                }
+                            }
+                        }
+                    });
+
+                    // Add the chart to the global array to keep track
+                    window.radarCharts.push(radarChart);
+                });
+            }
+        </script>
     </details>
 
     <div>
         <button onclick="generateResults()">Generate Results</button>
-        <!-- <button onclick="savePDF()">Save PDF</button> -->
+        <!-- <button onclick="savePDF()">Generate PDF</button> -->
     </div>
     <!-- Canvas for Spider Graph -->
     <canvas id="spidergraph" hidden=true></canvas>
@@ -968,9 +1485,9 @@ function generatedomain1() {
                     datasets: [{
                         label: 'CISSP Self-Assessment',
                         data: [domain1Aggregate, domain2Aggregate, domain3Aggregate, domain4Aggregate, domain5Aggregate, domain6Aggregate, domain7Aggregate, domain8Aggregate],
-                        backgroundColor: '#80c883',
+                        backgroundColor: '#d9eeda',
                         borderColor: '#4CAF50',
-                        borderWidth: 2
+                        borderWidth: 1
                     }]
                 },
                 options: {
