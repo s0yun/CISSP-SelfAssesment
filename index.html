@@ -10,6 +10,8 @@
     <!-- Script for PDF Generation -->
     <!-- <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script> -->
     <link rel="stylesheet" href="styles.css">
+    <!-- offloading chart js logic before I go insane -->
+    <script src="charts.js" defer></script>
 </head>
 
 <body>
@@ -214,7 +216,7 @@
             <button onclick="generateDomainGraphs('domain2')">Generate Results</button>
             <canvas hidden="true" id="domain2-chart"></canvas>
         </div>
-   
+
     </details>
     <!-- Domain 3: Security Architecture and Engineering -->
     <details>
@@ -338,7 +340,7 @@
             <button onclick="generateDomainGraphs('domain3')">Generate Results</button>
             <canvas hidden="true" id="domain3-chart"></canvas>
         </div>
-      </details>
+    </details>
 
     <!-- Domain 4: Communication and Network Security -->
     <details>
@@ -400,7 +402,7 @@
             <button onclick="generateDomainGraphs('domain4')">Generate Results</button>
             <canvas hidden="true" id="domain4-chart"></canvas>
         </div>
-     </details>
+    </details>
 
     <!-- Domain 5: Identity and Access Management (IAM) -->
     <details>
@@ -474,7 +476,7 @@
             <button onclick="generateDomainGraphs('domain5')">Generate Results</button>
             <canvas hidden="true" id="domain5-chart"></canvas>
         </div>
-     </details>
+    </details>
 
     <!-- Domain 6: Security Assessment and Testing -->
     <details>
@@ -721,14 +723,13 @@
             <button onclick="generateDomainGraphs('domain8')">Generate Results</button>
             <canvas hidden="true" id="domain8-chart"></canvas>
         </div>
-        
+
     </details>
     <div>
-        <button onclick="generateResults()">Generate Results</button>
-        <button id='PDF' hidden="true" onclick="savePDF()">Generate PDF</button>
+        <button onclick="generateaverages()">Generate Results</button>
     </div>
-    <!-- Canvas for Radar Graph -->
-    <canvas id="radargraph" hidden=true></canvas>
+    <!-- Canvas for Domain Averages -->
+    <canvas id="domain-average" hidden=true></canvas>
 
     <script>
         // Function to toggle expand/collapse for details elements
@@ -760,7 +761,7 @@
 
 
         // RESULTS GENERATION SECTION
-        let resultsGenerated = false; // Track whether results have been generated
+
         // Function to calculate the aggregate scores
         function calculateAggregate(domainClass, outputId) {
             const scores = document.querySelectorAll(domainClass);
@@ -773,12 +774,13 @@
                 }
             });
             const aggregate = (count > 0) ? (total / count).toFixed(2) : 0;
-            document.getElementById(outputId).innerText = aggregate;
+            // document.getElementById(outputId).innerText = aggregate;
             return parseFloat(aggregate);
         }
 
         // Function to generate all results graphs
         function generateaverages() {
+            generateAllDomainGraphs();
             // Calculate aggregate scores for each domain
             const domain1Aggregate = calculateAggregate('.domain1-score', 'domain1-aggregate');
             const domain2Aggregate = calculateAggregate('.domain2-score', 'domain2-aggregate');
@@ -789,7 +791,7 @@
             const domain7Aggregate = calculateAggregate('.domain7-score', 'domain7-aggregate');
             const domain8Aggregate = calculateAggregate('.domain8-score', 'domain8-aggregate');
             // Display Spider Graph
-            const ctx = document.getElementById('radargraph').getContext('2d');
+            const ctx = document.getElementById('domain-average').getContext('2d');
             if (window.generatedChart) {
                 window.generatedChart.destroy(); // Destroy the previous chart if it exists
             }
@@ -820,103 +822,7 @@
                     }
                 }
             });
-            resultsGenerated = true; // Set flag to indicate results have been generated
-            const pdfButton = document.getElementById('PDF');
-            pdfButton.removeAttribute('hidden');
         }
-        // Function to save the generated results and chart as a PDF - when it works ;-;
-        function savePDF() {
-            toggleExpandCollapse("details", true);
-            window.print();
-        }
-
-        // GLOBAL CHART FUNCTIONS 
-
-        // Function to generate or update radar charts for a specific domain
-        function generateDomainGraphs(domainId) {
-            // Set the word limit for label line breaks
-            const wordLimit = 3;
-
-            // Function to split label into multiple lines based on word limit
-            function splitLabelByWords(label, wordLimit) {
-                const words = label.split(' ');
-                let lines = [];
-                for (let i = 0; i < words.length; i += wordLimit) {
-                    lines.push(words.slice(i, i + wordLimit).join(' '));
-                }
-                return lines;
-            }
-
-            // Find the domain section
-            const domain = document.getElementById(domainId);
-
-            // Collect scores only within this domain section
-            const scores = Array.from(domain.querySelectorAll(`.${domainId}-score`)).map(input => {
-                return parseInt(input.value) || 0; // Use 0 if no value is present
-            });
-
-            // Collect and process labels within this domain section
-            const labels = Array.from(domain.querySelectorAll('.subtopic label')).map(label => {
-                return splitLabelByWords(label.innerText, wordLimit); // Keep labels as arrays
-            });
-
-            // Get the canvas for this domain section
-            const canvas = domain.querySelector('#' + domainId + '-chart');
-            const ctx = canvas.getContext('2d');
-
-            const domainNames = {
-                domain1: 'Domain 1: Security and Risk Management',
-                domain2: 'Domain 2: Asset Security',
-                domain3: 'Domain 3: Security Architecture and Engineering',
-                domain4: 'Domain 4: Communication and Network Security',
-                domain5: 'Domain 5: Identity and Access Management',
-                domain6: 'Domain 6: Security Assessment and Testing',
-                domain7: 'Domain 7: Security Operations',
-                domain8: 'Domain 8: Software Development Security',
-            };
-
-            // Check if the chart already exists
-            if (canvas.chart) {
-                // Update the existing chart
-                canvas.chart.data.datasets[0].data = scores;
-                canvas.chart.data.labels = labels
-                canvas.chart.update(); // Update the chart to reflect new data
-            } else {
-                // Create the radar chart for this domain
-                canvas.chart = new Chart(ctx, {
-                    type: 'radar',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: `Subtopic Scores for ${domainNames[domainId]}`, // Update label with domain name
-                            data: scores,
-                            backgroundColor: '#d9eeda',
-                            borderColor: '#4CAF50',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            r: {
-                                beginAtZero: true,
-                                min: 1,
-                                max: 5
-                            }
-                        }
-                    }
-                });
-            }
-
-            // Show the canvas after generating/updating the chart
-            canvas.removeAttribute('hidden');
-        }
-
-
-
-
-
-
-
     </script>
 </body>
 
