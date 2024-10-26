@@ -596,20 +596,16 @@
                 </ul>
                 <input type="number" class="domain4-score" min="1" max="5">
             </div>
-            <button onclick="generatedomain4()">Subtopic results</button>
+            <button onclick="generateDomain4()">Subtopic results</button>
             <h3>Aggregate Score: <span id="domain4-aggregate"></span></h3>
             <canvas hidden="true"></canvas>
         </div>
         <!-- Calcuclate graph for Domain 4 -->
         <script>
-            function generatedomain4() {
-                // Destroy any existing charts to avoid duplicates
-                if (window.radarCharts) {
-                    window.radarCharts.forEach(chart => chart.destroy());
-                }
-                window.radarCharts = [];
+            function generateDomain4() {
                 // Set the word limit for label line breaks
                 const wordLimit = 3;
+
                 // Function to split label into multiple lines based on word limit
                 function splitLabelByWords(label, wordLimit) {
                     const words = label.split(' ');
@@ -619,28 +615,38 @@
                     }
                     return lines;
                 }
+
                 // Find all domain sections
                 const domainSections = document.querySelectorAll('.domain-section');
                 domainSections.forEach(domain => {
                     const domainId = domain.id; // Get the ID of the current domain section
+
                     // Collect scores only within this domain section
                     const scores = Array.from(domain.querySelectorAll(`.${domainId}-score`)).map(input => {
                         return parseInt(input.value) || 0;
                     });
+
                     // Collect and process labels within this domain section
                     const labels = Array.from(domain.querySelectorAll('.subtopic label')).map(label => {
-                        return splitLabelByWords(label.innerText, wordLimit); // Split label into multiple lines
+                        return splitLabelByWords(label.innerText, wordLimit); // Keep labels as arrays
                     });
+
                     // Get the canvas for this domain section
                     const canvas = domain.querySelector('canvas');
                     const ctx = canvas.getContext('2d');
+
+                    // Destroy any existing chart if it exists
+                    if (canvas.chart) {
+                        canvas.chart.destroy();
+                    }
+
                     // Create the radar chart for this domain
-                    const radarChart = new Chart(ctx, {
+                    canvas.chart = new Chart(ctx, {
                         type: 'radar',
                         data: {
-                            labels: labels, // Use processed labels with line breaks
+                            labels: labels, // Keep processed labels as arrays
                             datasets: [{
-                                label: `Subtopic scores for Domain 4: Communication and Network Security`,
+                                label: `Domain 4: Communication and Network Security`,
                                 data: scores,
                                 backgroundColor: '#d9eeda',
                                 borderColor: '#4CAF50',
@@ -657,8 +663,6 @@
                             }
                         }
                     });
-                    // Add the chart to the global array to keep track
-                    window.radarCharts.push(radarChart);
                 });
             }
         </script>
