@@ -72,7 +72,7 @@ li {
     color: #555;
 }
 
-#spidergraph {
+canvas {
     width: 50%;
     height: 50%;
     margin: 20px auto;
