@@ -736,15 +736,16 @@
                 <label>5.6 - Implement authentication systems</label>
                 <input type="number" class="domain5-score" min="1" max="5">
             </div>
-            <button onclick="generatedomain5()">Subtopic results</button>
+            <button onclick="generateDomain5()">Subtopic results</button>
             <h3>Aggregate Score: <span id="domain5-aggregate"></span></h3>
             <canvas hidden="true"></canvas>
         </div>
         <!-- Calcuclate graph for Domain 5 -->
         <script>
-            function generatedomain5() {
+            function generateDomain5() {
                 // Set the word limit for label line breaks
                 const wordLimit = 3;
+
                 // Function to split label into multiple lines based on word limit
                 function splitLabelByWords(label, wordLimit) {
                     const words = label.split(' ');
@@ -754,28 +755,38 @@
                     }
                     return lines;
                 }
+
                 // Find all domain sections
                 const domainSections = document.querySelectorAll('.domain-section');
                 domainSections.forEach(domain => {
                     const domainId = domain.id; // Get the ID of the current domain section
+
                     // Collect scores only within this domain section
                     const scores = Array.from(domain.querySelectorAll(`.${domainId}-score`)).map(input => {
                         return parseInt(input.value) || 0;
                     });
+
                     // Collect and process labels within this domain section
                     const labels = Array.from(domain.querySelectorAll('.subtopic label')).map(label => {
-                        return splitLabelByWords(label.innerText, wordLimit); // Split label into multiple lines
+                        return splitLabelByWords(label.innerText, wordLimit); // Keep labels as arrays
                     });
+
                     // Get the canvas for this domain section
                     const canvas = domain.querySelector('canvas');
                     const ctx = canvas.getContext('2d');
+
+                    // Destroy any existing chart if it exists
+                    if (canvas.chart) {
+                        canvas.chart.destroy();
+                    }
+
                     // Create the radar chart for this domain
-                    const radarChart = new Chart(ctx, {
+                    canvas.chart = new Chart(ctx, {
                         type: 'radar',
                         data: {
-                            labels: labels, // Use processed labels with line breaks
+                            labels: labels, // Keep processed labels as arrays
                             datasets: [{
-                                label: `Subtopic scores for Domain 5: Identity and Access Management (IAM)`,
+                                label: `Domain 5: Identity and Access Management (IAM)`,
                                 data: scores,
                                 backgroundColor: '#d9eeda',
                                 borderColor: '#4CAF50',
