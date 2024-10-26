@@ -166,8 +166,86 @@
                 </ul>
                 <input type="number" class="domain1-score" min="1" max="5">
             </div>
+            <button onclick="generatedomain1()">Graph it</button>
             <h3>Aggregate Score: <span id="domain1-aggregate"></span></h3>
+            <canvas hidden="true" ></canvas>
+
         </div>
+
+        <!-- Calcuclate graph for Domain 1 -->
+        <script>
+function generatedomain1() {
+    // Destroy any existing charts to avoid duplicates
+    if (window.radarCharts) {
+        window.radarCharts.forEach(chart => chart.destroy());
+    }
+    window.radarCharts = [];
+
+    // Set the word limit for label line breaks
+    const wordLimit = 3;
+
+    // Function to split label into multiple lines based on word limit
+    function splitLabelByWords(label, wordLimit) {
+        const words = label.split(' ');
+        let lines = [];
+        for (let i = 0; i < words.length; i += wordLimit) {
+            lines.push(words.slice(i, i + wordLimit).join(' '));
+        }
+        return lines;
+    }
+
+    // Find all domain sections
+    const domainSections = document.querySelectorAll('.domain-section');
+
+    domainSections.forEach(domain => {
+        const domainId = domain.id; // Get the ID of the current domain section
+
+        // Collect scores only within this domain section
+        const scores = Array.from(domain.querySelectorAll(`.${domainId}-score`)).map(input => {
+            return parseInt(input.value) || 0;
+        });
+
+        // Collect and process labels within this domain section
+        const labels = Array.from(domain.querySelectorAll('.subtopic label')).map(label => {
+            return splitLabelByWords(label.innerText, wordLimit); // Split label into multiple lines
+        });
+
+        // Get the canvas for this domain section
+        const canvas = domain.querySelector('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Create the radar chart for this domain
+        const radarChart = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: labels, // Use processed labels with line breaks
+                datasets: [{
+                    label: `Scores for ${domain.querySelector('h3').innerText}`,
+                    data: scores,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        min: 1,
+                        max: 5
+                    }
+                }
+            }
+        });
+
+        // Add the chart to the global array to keep track
+        window.radarCharts.push(radarChart);
+    });
+}
+
+        </script>
+
+
     </details>
 
 
@@ -835,7 +913,7 @@
             detailsElements.forEach(details => details.open = !allExpanded);
             expandButton.textContent = allExpanded ? "Expand All" : "Collapse All";
         });
-        
+
         // RESULTS GENERATION SECTION
 
         let resultsGenerated = false; // Track whether results have been generated
