@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CISSP Domain Progress Visualizer</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h1>CISSP Domain Progress Visualizer</h1>
+    <p>Use these metrics for your **gap analysis** and **risk-based study prioritization** (Domain 1).</p>
+
+    <h3>Example Exam Report Data (JSON Format)</h3>
+    <p>Use this exact format for your scores:</p>
+    <div class="example">
+[
+  { "Domain": "Domain 1: Security and Risk Management", "Score": 85 },
+  { "Domain": "Domain 2: Asset Security", "Score": 68 },
+  { "Domain": "Domain 3: Security Architecture and Engineering", "Score": 76 },
+  { "Domain": "Domain 4: Communications and Network Security", "Score": 55 },
+  { "Domain": "Domain 5: Identity and Access Management (IAM)", "Score": 92 },
+  { "Domain": "Domain 6: Security Assessment and Testing", "Score": 71 },
+  { "Domain": "Domain 7: Security Operations", "Score": 80 },
+  { "Domain": "Domain 8: Software Development Security", "Score": 62 }
+]
+    </div>
+    
+    <h3>1. Paste Your Structured Exam Report Data Below:</h3>
+    <textarea id="reportData" rows="10" placeholder="Paste your structured JSON exam report data here..."></textarea>
+    <button onclick="processReport()">Show Progress</button>
+
+    <div id="visualProgress">
+        <h3>2. Domain Performance Visual (Target 70%)</h3>
+        <canvas id="domainChart"></canvas>
+    </div>
+</div>
+
+<script>
+    // Global variable to hold the chart instance
+    let myDomainChart = null; 
+
+    /**
+     * CISSP Mindset: Perform the risk-based processing of the exam report data.
+     */
+    function processReport() {
+        const dataInput = document.getElementById('reportData').value;
+        let report;
+
+        // Basic error handling for JSON parsing
+        try {
+            report = JSON.parse(dataInput);
+        } catch (e) {
+            alert("Error: Report data is not valid JSON. Please check the format and ensure it's a single, valid array.");
+            return;
+        }
+
+        if (!Array.isArray(report) || report.length === 0) {
+            alert("Error: The report must be a non-empty array of domain objects.");
+            return;
+        }
+
+        const domainMetrics = [];
+        
+        // Data processing and validation loop
+        report.forEach(domainResult => {
+            const score = parseInt(domainResult.Score);
+            const domainName = domainResult.Domain;
+
+            if (domainName && !isNaN(score) && score >= 0 && score <= 100) {
+                 domainMetrics.push({
+                    domain: domainName,
+                    score: score,
+                    // Highlight areas needing management attention (below 70%)
+                    color: score >= 70 ? 'rgba(76, 175, 80, 0.8)' : 'rgba(244, 67, 54, 0.8)' // Green/Red
+                });
+            }
+        });
+
+        if (domainMetrics.length > 0) {
+            renderVisualProgress(domainMetrics);
+        } else {
+            alert("No valid domain scores were found. Please check your input.");
+        }
+    }
+
+    /**
+     * Implement the Chart.js rendering function for the visual showcase.
+     */
+    function renderVisualProgress(metrics) {
+        // Extract data for the chart
+        const domainLabels = metrics.map(m => m.domain.split(': ')[0]); // e.g., "Domain 1"
+        const scores = metrics.map(m => m.score);
+        const colors = metrics.map(m => m.color);
+
+        const ctx = document.getElementById('domainChart').getContext('2d');
+        
+        // Destroys the previous chart instance before creating a new one
+        if (myDomainChart) {
+            myDomainChart.destroy();
+        }
+
+        myDomainChart = new Chart(ctx, {
+            type: 'bar', 
+            data: {
+                labels: domainLabels,
+                datasets: [{
+                    label: 'Domain Score (%)',
+                    data: scores,
+                    backgroundColor: colors,
+                    borderColor: colors.map(c => c.replace('0.8', '1')), 
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                indexAxis: 'y', // Horizontal bar chart
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Percentage Correct'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'CISSP Domain Performance (Risk Areas Highlighted in Red)'
+                    },
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    }
+
+    // Load the example data on page load for immediate visual feedback
+    document.addEventListener('DOMContentLoaded', () => {
+        // Simple way to extract the text content of the example div
+        const exampleDiv = document.querySelector('.example');
+        if (exampleDiv) {
+            // Trim and clean up the example JSON for pre-population
+            const exampleData = exampleDiv.textContent.trim().replace(/\s+/g, ' '); 
+            document.getElementById('reportData').value = exampleData;
+            processReport(); // Immediately show the chart with example data
+        }
+    });
+</script>
+
+</body>
+</html>
